@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -20,7 +21,7 @@ import com.zack.zacknote.bean.Note;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private FloatingActionButton noteFab;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private MenuItem menuItem;
 
     private List<Note> notes;
 
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navigationView = (NavigationView) findViewById(R.id.navigation_in_main);
         toolbar = (Toolbar) findViewById(R.id.tool_bar_in_main);
         toolbar.setTitle("扎克笔记");
+        menuItem = navigationView.getMenu().getItem(0);//设置默认亮的菜单
+        menuItem.setChecked(true);
         setSupportActionBar(toolbar);
         setNavigationViewItemClickListener();
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
@@ -103,9 +107,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
+                if (menuItem != null) {
+                    menuItem.setChecked(false);
+                }
+                switch (item.getItemId()) {
+                    case R.id.notes_in_menu:
+                        Toast.makeText(MainActivity.this, "笔记", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.deleted_in_menu:
+                        Toast.makeText(MainActivity.this, "回收站", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                item.setChecked(true);
                 drawerLayout.closeDrawer(Gravity.LEFT);
+                menuItem = item;
                 return false;
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.notes, menu);
+        return true;
     }
 }
