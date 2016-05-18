@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         actionBarDrawerToggle.syncState();
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        navigationView.setItemTextColor(getResources().getColorStateList(R.color.button_text));
+        navigationView.setItemIconTintList(getResources().getColorStateList(R.color.button_text));
 
     }
 
