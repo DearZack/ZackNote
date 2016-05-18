@@ -29,6 +29,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private MenuItem menuItem;
+    private String nowTag;
 
     private List<Note> notes;
 
@@ -62,13 +63,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_in_main);
         navigationView = (NavigationView) findViewById(R.id.navigation_in_main);
         toolbar = (Toolbar) findViewById(R.id.tool_bar_in_main);
-        toolbar.setTitle("扎克笔记");
+        toolbar.setTitle(R.string.menu_note);
         menuItem = navigationView.getMenu().getItem(0);//设置默认亮的菜单
         menuItem.setChecked(true);
         setSupportActionBar(toolbar);
         setNavigationViewItemClickListener();
-        actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                toolbar.setTitle(R.string.app_name_in_chinese);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                toolbar.setTitle(nowTag);
+            }
+        };
         actionBarDrawerToggle.syncState();
+        ;
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         navigationView.setItemTextColor(getResources().getColorStateList(R.color.button_text));
         navigationView.setItemIconTintList(getResources().getColorStateList(R.color.button_text));
@@ -76,6 +90,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initData() {
+        nowTag = getResources().getString(R.string.menu_note);
         if (notes == null) {
             notes = new ArrayList<>();
         }
@@ -113,13 +128,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 switch (item.getItemId()) {
                     case R.id.notes_in_menu:
-                        Toast.makeText(MainActivity.this, "笔记", Toast.LENGTH_SHORT).show();
+                        nowTag = getResources().getString(R.string.menu_note);
+                        toolbar.setTitle(R.string.menu_note);
+                        Toast.makeText(MainActivity.this, R.string.menu_note, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.deleted_in_menu:
-                        Toast.makeText(MainActivity.this, "回收站", Toast.LENGTH_SHORT).show();
+                        nowTag = getResources().getString(R.string.menu_deleted_note);
+                        toolbar.setTitle(R.string.menu_deleted_note);
+                        Toast.makeText(MainActivity.this, R.string.menu_deleted_note, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.about_in_menu:
-                        Toast.makeText(MainActivity.this, "关于", Toast.LENGTH_SHORT).show();
+                        nowTag = getResources().getString(R.string.menu_about);
+                        toolbar.setTitle(R.string.menu_about);
+                        Toast.makeText(MainActivity.this, R.string.menu_about, Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         break;
