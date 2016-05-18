@@ -1,5 +1,4 @@
 # ZackNote
-First Commit
 
 new ：
 
