@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ZackNote</string>
+
+    <string name="menu_note">笔记</string>
+    <string name="menu_deleted_note">回收站</string>
+    <string name="menu_about">关于</string>
 </resources>

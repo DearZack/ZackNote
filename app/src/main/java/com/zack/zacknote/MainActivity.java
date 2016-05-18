@@ -119,6 +119,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.deleted_in_menu:
                         Toast.makeText(MainActivity.this, "回收站", Toast.LENGTH_SHORT).show();
                         break;
+                    case R.id.about_in_menu:
+                        Toast.makeText(MainActivity.this, "关于", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
                 }
                 item.setChecked(true);
                 drawerLayout.closeDrawer(Gravity.LEFT);

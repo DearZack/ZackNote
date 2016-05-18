@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/notes_in_menu"
-        android:icon="@drawable/ic_event_note_black_18dp"
-        android:title="笔记"/>
-    <item android:id="@+id/deleted_in_menu"
-        android:icon="@drawable/ic_delete_black_18dp"
-        android:title="回收站"/>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/notes_in_menu"
+            android:icon="@drawable/ic_event_note_black_18dp"
+            android:title="@string/menu_note" />
 
+        <item
+            android:id="@+id/deleted_in_menu"
+            android:icon="@drawable/ic_delete_black_18dp"
+            android:title="@string/menu_deleted_note" />
+
+        <item android:title="其他">
+            <menu>
+                <item
+                    android:id="@+id/about_in_menu"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_about_black_18dp"
+                    android:title="@string/menu_about" />
+            </menu>
+        </item>
+    </group>
 </menu>
