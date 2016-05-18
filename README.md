@@ -4,6 +4,7 @@ new ：
 
 navigationView.setItemTextColor(getResources().getColorStateList(R.color.button_text));
 navigationView.setItemIconTintList(getResources().getColorStateList(R.color.button_text));
+
 //        navigationView.setItemIconTintList(null); //不要统一的颜色
 
 
