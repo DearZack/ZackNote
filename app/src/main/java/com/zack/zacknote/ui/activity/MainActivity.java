@@ -1,5 +1,6 @@
 package com.zack.zacknote.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -28,7 +29,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
     private Toolbar toolbar;
+
     private MenuItem menuItem;
+    private Intent intent;
     private String nowTag;
 
     private List<Note> notes;
@@ -82,7 +85,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         };
         actionBarDrawerToggle.syncState();
-        ;
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         navigationView.setItemTextColor(getResources().getColorStateList(R.color.button_text));
         navigationView.setItemIconTintList(getResources().getColorStateList(R.color.button_text));
@@ -116,6 +118,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.note_fab:
                 Toast.makeText(this, "写笔记", Toast.LENGTH_SHORT).show();
+                intent = new Intent(MainActivity.this, NoteActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
