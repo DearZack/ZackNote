@@ -2,7 +2,10 @@ package com.zack.zacknote.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,14 +31,65 @@ public class NoteActivity extends BaseActivity {
 
         toolbar.setTitle("新的笔记");
         setSupportActionBar(toolbar);
-        toolbar.getMenu().getItem(0).setVisible(false);
-//        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_36dp);
+        editTextTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!editTextContent.getText().toString().isEmpty() && !editTextTitle.getText().toString().isEmpty()) {
+                    toolbar.getMenu().getItem(0).setVisible(true);
+                } else {
+                    toolbar.getMenu().getItem(0).setVisible(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        editTextContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!editTextContent.getText().toString().isEmpty() && !editTextTitle.getText().toString().isEmpty()) {
+                    toolbar.getMenu().getItem(0).setVisible(true);
+                } else {
+                    toolbar.getMenu().getItem(0).setVisible(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.commit_in_menu:
+                        Toast.makeText(NoteActivity.this, "提交", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.commit, menu);
+        toolbar.getMenu().getItem(0).setVisible(false);
         return true;
     }
 }
