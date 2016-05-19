@@ -11,9 +11,9 @@
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout_in_main"
-        android:background="#ffffff"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#ffffff">
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -32,7 +32,8 @@
                         android:id="@+id/tool_bar_in_main"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="?attr/actionBarSize" />
+                        android:minHeight="?attr/actionBarSize"
+                        app:cardElevation="4dp" />
                 </android.support.design.widget.AppBarLayout>
 
                 <android.support.v7.widget.RecyclerView

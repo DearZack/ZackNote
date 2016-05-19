@@ -9,17 +9,40 @@
     android:fitsSystemWindows="true"
     tools:context="com.zack.zacknote.ui.activity.NoteActivity">
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/note_title_in_note"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar_in_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="标题"
-        app:met_floatingLabel="highlight" />
+        android:minHeight="?attr/actionBarSize"
+        app:cardElevation="4dp" />
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/note_content_in_note"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/note_title_in_note" />
+        android:layout_below="@id/tool_bar_in_note"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/note_title_in_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:hint="标题"
+            app:met_floatingLabel="highlight" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/note_content_in_note"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:gravity="start"
+            android:hint="笔记内容"
+            app:met_floatingLabel="highlight"
+            app:met_hideUnderline="true" />
+    </LinearLayout>
 
 </RelativeLayout>
