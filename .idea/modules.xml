@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ZackNote.iml" filepath="$PROJECT_DIR$/ZackNote.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zack/zack.iml" filepath="$PROJECT_DIR$/zack/zack.iml" />
     </modules>
   </component>
 </project>
