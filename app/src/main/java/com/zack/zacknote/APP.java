@@ -12,8 +12,8 @@ import com.zack.dao.NotesDao;
  */
 public class APP extends Application {
 
-    private DaoSession daoSession;
-    private NotesDao notesDao;
+    public DaoSession daoSession;
+    public NotesDao notesDao;
 
     @Override
     public void onCreate() {
