@@ -1,5 +1,6 @@
 package com.zack.zacknote.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -17,10 +18,14 @@ public class NoteActivity extends BaseActivity {
     private Toolbar toolbar;
     private MaterialEditText editTextTitle, editTextContent;
 
+    private Intent intent;
+    private Bundle bundle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
+        intent = getIntent();
         initViews();
     }
 

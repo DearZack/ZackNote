@@ -37,6 +37,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private List<Note> notes;
 
+    public static final int CREATE_NOTE = 1;
+    public static final int MODIFY_NOTE = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +123,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.note_fab:
                 Toast.makeText(this, "写笔记", Toast.LENGTH_SHORT).show();
                 intent = new Intent(MainActivity.this, NoteActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, CREATE_NOTE);
                 break;
         }
     }
