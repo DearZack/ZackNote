@@ -123,6 +123,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.note_fab:
                 Toast.makeText(this, "写笔记", Toast.LENGTH_SHORT).show();
                 intent = new Intent(MainActivity.this, NoteActivity.class);
+                intent.putExtra("type", CREATE_NOTE);
                 startActivityForResult(intent, CREATE_NOTE);
                 break;
         }
