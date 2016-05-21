@@ -24,21 +24,18 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final int CREATE_NOTE = 1;
+    public static final int MODIFY_NOTE = 2;
     private RecyclerView recyclerView;
     private FloatingActionButton noteFab;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
     private Toolbar toolbar;
-
     private MenuItem menuItem;
     private Intent intent;
     private String nowTag;
-
     private List<Note> notes;
-
-    public static final int CREATE_NOTE = 1;
-    public static final int MODIFY_NOTE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,5 +164,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.notes, menu);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case CREATE_NOTE:
+                break;
+            case MODIFY_NOTE:
+                break;
+            default:
+                break;
+        }
     }
 }

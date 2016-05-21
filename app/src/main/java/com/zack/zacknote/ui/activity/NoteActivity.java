@@ -15,17 +15,30 @@ import com.zack.zacknote.R;
 
 public class NoteActivity extends BaseActivity {
 
+    public static final int CREATE_NOTE = 1;
+    public static final int MODIFY_NOTE = 2;
     private Toolbar toolbar;
     private MaterialEditText editTextTitle, editTextContent;
-
     private Intent intent;
     private Bundle bundle;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
         intent = getIntent();
+        type = intent.getIntExtra("type", CREATE_NOTE);
+        switch (type) {
+            case CREATE_NOTE:
+                createNote();
+                break;
+            case MODIFY_NOTE:
+                modifyNote();
+                break;
+            default:
+                break;
+        }
         initViews();
     }
 
@@ -96,5 +109,13 @@ public class NoteActivity extends BaseActivity {
         getMenuInflater().inflate(R.menu.commit, menu);
         toolbar.getMenu().getItem(0).setVisible(false);
         return true;
+    }
+
+    private void createNote() {
+
+    }
+
+    private void modifyNote() {
+
     }
 }
