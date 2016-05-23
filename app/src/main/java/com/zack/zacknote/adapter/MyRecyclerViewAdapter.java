@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.zack.bean.Note;
 import com.zack.zacknote.R;
-import com.zack.zacknote.bean.Note;
 
 import java.util.List;
 
@@ -22,6 +22,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private Context context;
     private List<Note> notes;
     private LayoutInflater layoutInflater;
+    private OnItemClickListener OnItemClickListener;
 
     public MyRecyclerViewAdapter(Context context, List<Note> notes) {
         this.context = context;
@@ -40,7 +41,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         holder.title.setText(notes.get(position).getTitle());
         holder.content.setText(notes.get(position).getContent());
-        holder.lastModifyTime.setText(notes.get(position).getLastModifyTime());
+        holder.lastModifyTime.setText(notes.get(position).getLastModifyTime().toString());
         if (OnItemClickListener != null) {
             holder.more.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -62,6 +63,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return notes.size();
     }
 
+    public void OnItemClickListener(OnItemClickListener OnItemClickListener) {
+        this.OnItemClickListener = OnItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, content, lastModifyTime;
@@ -76,15 +85,5 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             more = (ImageButton) itemView.findViewById(R.id.note_more);
             root = (CardView) itemView.findViewById(R.id.notes_item_root);
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
-    private OnItemClickListener OnItemClickListener;
-
-    public void OnItemClickListener(OnItemClickListener OnItemClickListener) {
-        this.OnItemClickListener = OnItemClickListener;
     }
 }

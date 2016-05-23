@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.zack.bean.Note;
 import com.zack.zacknote.R;
 
 public class NoteActivity extends BaseActivity {
@@ -29,16 +30,6 @@ public class NoteActivity extends BaseActivity {
         setContentView(R.layout.activity_note);
         intent = getIntent();
         type = intent.getIntExtra("type", CREATE_NOTE);
-        switch (type) {
-            case CREATE_NOTE:
-                createNote();
-                break;
-            case MODIFY_NOTE:
-                modifyNote();
-                break;
-            default:
-                break;
-        }
         initViews();
     }
 
@@ -95,6 +86,16 @@ public class NoteActivity extends BaseActivity {
                 switch (item.getItemId()) {
                     case R.id.commit_in_menu:
                         Toast.makeText(NoteActivity.this, "提交", Toast.LENGTH_SHORT).show();
+                        switch (type) {
+                            case CREATE_NOTE:
+                                createNote();
+                                break;
+                            case MODIFY_NOTE:
+                                modifyNote();
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     default:
                         break;
@@ -112,7 +113,15 @@ public class NoteActivity extends BaseActivity {
     }
 
     private void createNote() {
-
+        Note note = new Note();
+        note.setIsDeleted(true);
+        note.setCreateTime(System.currentTimeMillis());
+        note.setLastModifyTime(System.currentTimeMillis());
+        note.setTitle(editTextTitle.getText().toString());
+        note.setContent(editTextContent.getText().toString());
+        intent.putExtra("note", note);
+        setResult(CREATE_NOTE, intent);
+        finish();
     }
 
     private void modifyNote() {

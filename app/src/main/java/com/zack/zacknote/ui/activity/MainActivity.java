@@ -15,9 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.zack.bean.Note;
 import com.zack.zacknote.R;
 import com.zack.zacknote.adapter.MyRecyclerViewAdapter;
-import com.zack.zacknote.bean.Note;
+import com.zack.zacknote.data.DealNotes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Intent intent;
     private String nowTag;
     private List<Note> notes;
+    private DealNotes dealNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,11 +99,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (notes == null) {
             notes = new ArrayList<>();
         }
+        dealNotes = new DealNotes();
         for (int i = 0; i < 20; i++) {
             Note note = new Note();
             note.setTitle("title: " + i);
             note.setContent("content: " + i);
-            note.setLastModifyTime("time: " + i);
+            note.setLastModifyTime((long) i);
             if (i == 2) {
                 note.setTitle("title: title: title: title: " + i);
                 note.setContent("content:content:content:content:content: " + i);
@@ -171,6 +174,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case CREATE_NOTE:
+                Note note = data.getParcelableExtra("note");
+                dealNotes.addNote(note);
+                System.out.println(note);
                 break;
             case MODIFY_NOTE:
                 break;

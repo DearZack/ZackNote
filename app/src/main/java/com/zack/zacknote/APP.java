@@ -5,15 +5,15 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.zack.dao.DaoMaster;
 import com.zack.dao.DaoSession;
-import com.zack.dao.NotesDao;
+import com.zack.dao.NoteDao;
 
 /**
  * Created by Zack Zhou on 2016/5/20.
  */
 public class APP extends Application {
 
-    public DaoSession daoSession;
-    public NotesDao notesDao;
+    public static DaoSession daoSession;
+    public static NoteDao noteDao;
 
     @Override
     public void onCreate() {
@@ -26,6 +26,6 @@ public class APP extends Application {
         SQLiteDatabase database = openHelp.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(database);
         daoSession = daoMaster.newSession();
-        notesDao = daoSession.getNotesDao();
+        noteDao = daoSession.getNoteDao();
     }
 }

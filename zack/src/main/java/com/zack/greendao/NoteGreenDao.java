@@ -13,12 +13,12 @@ public class NoteGreenDao {
     }
 
     private static void initUserBean(Schema schema) {
-        Entity Note = schema.addEntity("Notes");
+        Entity Note = schema.addEntity("Note");
         Note.addLongProperty("id").primaryKey().autoincrement();
         Note.addStringProperty("title");
         Note.addStringProperty("content");
-        Note.addStringProperty("createTime");
-        Note.addStringProperty("lastModifyTime");
-        Note.addStringProperty("isDeleted");
+        Note.addLongProperty("createTime");
+        Note.addLongProperty("lastModifyTime");
+        Note.addBooleanProperty("isDeleted");
     }
 }
