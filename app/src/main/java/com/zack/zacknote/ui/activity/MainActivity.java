@@ -27,6 +27,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     public static final int CREATE_NOTE = 1;
     public static final int MODIFY_NOTE = 2;
+    public static final int CREATE_NOTE_SUCCEED = 3;
+    public static final int MODIFY_NOTE_SUCCEED = 4;
     private RecyclerView recyclerView;
     private FloatingActionButton noteFab;
     private DrawerLayout drawerLayout;
@@ -174,9 +176,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case CREATE_NOTE:
-                Note note = data.getParcelableExtra("note");
-                dealNotes.addNote(note);
-                System.out.println(note);
+                if (requestCode == CREATE_NOTE_SUCCEED) {
+                    Note note = data.getParcelableExtra("note");
+                    dealNotes.addNote(note);
+                    System.out.println(note);
+                } else {
+                    Toast.makeText(this, "没有输入笔记", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case MODIFY_NOTE:
                 break;

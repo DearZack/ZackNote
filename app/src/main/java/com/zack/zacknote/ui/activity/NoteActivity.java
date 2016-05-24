@@ -18,6 +18,8 @@ public class NoteActivity extends BaseActivity {
 
     public static final int CREATE_NOTE = 1;
     public static final int MODIFY_NOTE = 2;
+    public static final int CREATE_NOTE_SUCCEED = 3;
+    public static final int MODIFY_NOTE_SUCCEED = 4;
     private Toolbar toolbar;
     private MaterialEditText editTextTitle, editTextContent;
     private Intent intent;
@@ -120,7 +122,7 @@ public class NoteActivity extends BaseActivity {
         note.setTitle(editTextTitle.getText().toString());
         note.setContent(editTextContent.getText().toString());
         intent.putExtra("note", note);
-        setResult(CREATE_NOTE, intent);
+        setResult(CREATE_NOTE_SUCCEED, intent);
         finish();
     }
 
