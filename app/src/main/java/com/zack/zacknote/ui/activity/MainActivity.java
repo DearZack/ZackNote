@@ -176,12 +176,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case CREATE_NOTE:
-                if (requestCode == CREATE_NOTE_SUCCEED) {
+                if (resultCode == CREATE_NOTE_SUCCEED) {
                     Note note = data.getParcelableExtra("note");
                     dealNotes.addNote(note);
                     System.out.println(note);
                 } else {
-                    Toast.makeText(this, "没有输入笔记", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "没有笔记", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case MODIFY_NOTE:
