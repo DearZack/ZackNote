@@ -36,8 +36,8 @@
                         app:cardElevation="4dp" />
                 </android.support.design.widget.AppBarLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/note_recycler_view"
+                <FrameLayout
+                    android:id="@+id/frame_layout_in_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/app_bar_layout_in_main" />
@@ -48,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_margin="20dp"
                     android:src="@drawable/ic_mode_edit_black_48dp"
                     app:backgroundTint="@color/colorPrimary"
                     app:elevation="6dp"

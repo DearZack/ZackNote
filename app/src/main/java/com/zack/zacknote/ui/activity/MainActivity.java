@@ -3,12 +3,15 @@ package com.zack.zacknote.ui.activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.ViewUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +22,7 @@ import com.zack.bean.Note;
 import com.zack.zacknote.R;
 import com.zack.zacknote.adapter.MyRecyclerViewAdapter;
 import com.zack.zacknote.data.DealNotes;
+import com.zack.zacknote.ui.fragment.DisplayNotesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +33,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public static final int MODIFY_NOTE = 2;
     public static final int CREATE_NOTE_SUCCEED = 3;
     public static final int MODIFY_NOTE_SUCCEED = 4;
-    private RecyclerView recyclerView;
     private FloatingActionButton noteFab;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
     private Toolbar toolbar;
     private MenuItem menuItem;
+    private Fragment currentFragment;
+    private FragmentManager fragmentManager;
     private Intent intent;
     private String nowTag;
     private List<Note> notes;
@@ -51,22 +56,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initViews() {
-        recyclerView = (RecyclerView) findViewById(R.id.note_recycler_view);
-        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(MainActivity.this, notes);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        myRecyclerViewAdapter.OnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                switch (view.getId()) {
-                    case R.id.note_more:
-                        Toast.makeText(MainActivity.this, "more" + position, Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        Toast.makeText(MainActivity.this, "other" + position, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        recyclerView.setAdapter(myRecyclerViewAdapter);
         noteFab = (FloatingActionButton) findViewById(R.id.note_fab);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_in_main);
         navigationView = (NavigationView) findViewById(R.id.navigation_in_main);
@@ -93,7 +82,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         navigationView.setItemTextColor(getResources().getColorStateList(R.color.button_text));
         navigationView.setItemIconTintList(getResources().getColorStateList(R.color.button_text));
-
+        fragmentManager = getSupportFragmentManager();
+        initDefaultFragment();
     }
 
     private void initData() {
@@ -102,17 +92,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             notes = new ArrayList<>();
         }
         dealNotes = new DealNotes();
-        for (int i = 0; i < 20; i++) {
-            Note note = new Note();
-            note.setTitle("title: " + i);
-            note.setContent("content: " + i);
-            note.setLastModifyTime((long) i);
-            if (i == 2) {
-                note.setTitle("title: title: title: title: " + i);
-                note.setContent("content:content:content:content:content: " + i);
-            }
-            notes.add(note);
-        }
     }
 
     private void setOnListener() {
@@ -189,5 +168,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    private void initDefaultFragment() {
+        currentFragment = new DisplayNotesFragment();
+        fragmentManager.beginTransaction().add(R.id.frame_layout_in_main, currentFragment).commit();
     }
 }

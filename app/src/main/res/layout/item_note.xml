@@ -10,7 +10,7 @@
         android:id="@+id/notes_item_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
+        android:layout_margin="3dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="4dp">
 

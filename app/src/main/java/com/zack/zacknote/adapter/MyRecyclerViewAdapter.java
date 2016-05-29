@@ -41,7 +41,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         holder.title.setText(notes.get(position).getTitle());
         holder.content.setText(notes.get(position).getContent());
-        holder.lastModifyTime.setText(notes.get(position).getLastModifyTime().toString());
+        holder.lastModifyTime.setText(long2String(notes.get(position).getLastModifyTime()));
         if (OnItemClickListener != null) {
             holder.more.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,6 +65,20 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     public void OnItemClickListener(OnItemClickListener OnItemClickListener) {
         this.OnItemClickListener = OnItemClickListener;
+    }
+
+    private String long2String(long time) {
+        long now = System.currentTimeMillis();
+        long interval = now - time;
+        if (interval < 60 * 1000) {
+            return "刚刚";
+        } else if (interval < 60 * 60 * 1000) {
+            return interval / 60000 + "分钟之前";
+        } else if (interval < 24 * 60 * 60 * 1000) {
+            return interval / 3600000 + "小时之前";
+        } else {
+            return interval / 86400000 + "天之前";
+        }
     }
 
     public interface OnItemClickListener {
