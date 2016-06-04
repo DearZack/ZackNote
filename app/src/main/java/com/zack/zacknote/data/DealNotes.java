@@ -12,4 +12,8 @@ public class DealNotes {
     public void addNote(Note note) {
         APP.noteDao.insertOrReplace(note);
     }
+
+    public void modifyNote(Note note) {
+        APP.noteDao.update(note);
+    }
 }

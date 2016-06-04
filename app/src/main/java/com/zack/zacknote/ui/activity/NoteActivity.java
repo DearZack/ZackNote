@@ -13,16 +13,14 @@ import android.widget.Toast;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.zack.bean.Note;
 import com.zack.zacknote.R;
+import com.zack.zacknote.utils.ConstantUtils;
 
 public class NoteActivity extends BaseActivity {
 
-    public static final int CREATE_NOTE = 1;
-    public static final int MODIFY_NOTE = 2;
-    public static final int CREATE_NOTE_SUCCEED = 3;
-    public static final int MODIFY_NOTE_SUCCEED = 4;
     private Toolbar toolbar;
     private MaterialEditText editTextTitle, editTextContent;
     private Intent intent;
+    private Note note;
     private Bundle bundle;
     private int type;
 
@@ -31,7 +29,7 @@ public class NoteActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
         intent = getIntent();
-        type = intent.getIntExtra("type", CREATE_NOTE);
+        type = intent.getIntExtra("type", ConstantUtils.CREATE_NOTE);
         initViews();
     }
 
@@ -42,6 +40,12 @@ public class NoteActivity extends BaseActivity {
 
         toolbar.setTitle("新的笔记");
         setSupportActionBar(toolbar);
+        if (type == ConstantUtils.MODIFY_NOTE) {
+            note = intent.getParcelableExtra("note");
+            editTextTitle.setText(note.getTitle());
+            editTextContent.setText(note.getContent());
+//            toolbar.getMenu().getItem(0).setVisible(true);
+        }
         editTextTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -89,11 +93,11 @@ public class NoteActivity extends BaseActivity {
                     case R.id.commit_in_menu:
                         Toast.makeText(NoteActivity.this, "提交", Toast.LENGTH_SHORT).show();
                         switch (type) {
-                            case CREATE_NOTE:
+                            case ConstantUtils.CREATE_NOTE:
                                 createNote();
                                 break;
-                            case MODIFY_NOTE:
-                                modifyNote();
+                            case ConstantUtils.MODIFY_NOTE:
+                                modifyNote(note);
                                 break;
                             default:
                                 break;
@@ -116,17 +120,22 @@ public class NoteActivity extends BaseActivity {
 
     private void createNote() {
         Note note = new Note();
-        note.setIsDeleted(true);
+        note.setIsDeleted(false);
         note.setCreateTime(System.currentTimeMillis());
         note.setLastModifyTime(System.currentTimeMillis());
         note.setTitle(editTextTitle.getText().toString());
         note.setContent(editTextContent.getText().toString());
         intent.putExtra("note", note);
-        setResult(CREATE_NOTE_SUCCEED, intent);
+        setResult(ConstantUtils.CREATE_NOTE_SUCCEED, intent);
         finish();
     }
 
-    private void modifyNote() {
-
+    private void modifyNote(Note note) {
+        note.setLastModifyTime(System.currentTimeMillis());
+        note.setTitle(editTextTitle.getText().toString());
+        note.setContent(editTextContent.getText().toString());
+        intent.putExtra("note", note);
+        setResult(ConstantUtils.MODIFY_NOTE_SUCCEED, intent);
+        finish();
     }
 }

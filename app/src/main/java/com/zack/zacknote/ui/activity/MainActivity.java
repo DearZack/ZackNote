@@ -13,6 +13,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,19 +21,15 @@ import android.widget.Toast;
 
 import com.zack.bean.Note;
 import com.zack.zacknote.R;
-import com.zack.zacknote.adapter.MyRecyclerViewAdapter;
 import com.zack.zacknote.data.DealNotes;
 import com.zack.zacknote.ui.fragment.DisplayNotesFragment;
+import com.zack.zacknote.utils.ConstantUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    public static final int CREATE_NOTE = 1;
-    public static final int MODIFY_NOTE = 2;
-    public static final int CREATE_NOTE_SUCCEED = 3;
-    public static final int MODIFY_NOTE_SUCCEED = 4;
     private FloatingActionButton noteFab;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -43,6 +40,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private FragmentManager fragmentManager;
     private Intent intent;
     private String nowTag;
+    private long lastBackPressedTime;
     private List<Note> notes;
     private DealNotes dealNotes;
 
@@ -60,11 +58,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_in_main);
         navigationView = (NavigationView) findViewById(R.id.navigation_in_main);
         toolbar = (Toolbar) findViewById(R.id.tool_bar_in_main);
-        toolbar.setTitle(R.string.menu_note);
         menuItem = navigationView.getMenu().getItem(0);//设置默认亮的菜单
         menuItem.setChecked(true);
         setSupportActionBar(toolbar);
-        setNavigationViewItemClickListener();
+        toolbar.setTitle(R.string.menu_note);
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -96,6 +93,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void setOnListener() {
         noteFab.setOnClickListener(this);
+        setNavigationViewItemClickListener();
     }
 
     @Override
@@ -104,8 +102,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.note_fab:
                 Toast.makeText(this, "写笔记", Toast.LENGTH_SHORT).show();
                 intent = new Intent(MainActivity.this, NoteActivity.class);
-                intent.putExtra("type", CREATE_NOTE);
-                startActivityForResult(intent, CREATE_NOTE);
+                intent.putExtra("type", ConstantUtils.CREATE_NOTE);
+                startActivityForResult(intent, ConstantUtils.CREATE_NOTE);
                 break;
         }
     }
@@ -117,15 +115,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (menuItem != null) {
                     menuItem.setChecked(false);
                 }
+                Bundle bundle = new Bundle();
                 switch (item.getItemId()) {
                     case R.id.notes_in_menu:
                         nowTag = getResources().getString(R.string.menu_note);
                         toolbar.setTitle(R.string.menu_note);
+                        bundle.putInt("type", ConstantUtils.SHOW_NOTES);
+                        currentFragment = new DisplayNotesFragment();
+                        currentFragment.setArguments(bundle);
+                        fragmentManager.beginTransaction().replace(R.id.frame_layout_in_main, currentFragment).commit();
                         Toast.makeText(MainActivity.this, R.string.menu_note, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.deleted_in_menu:
                         nowTag = getResources().getString(R.string.menu_deleted_note);
                         toolbar.setTitle(R.string.menu_deleted_note);
+                        bundle.putInt("type", ConstantUtils.SHOW_DELETED_NOTES);
+                        currentFragment = new DisplayNotesFragment();
+                        currentFragment.setArguments(bundle);
+                        fragmentManager.beginTransaction().replace(R.id.frame_layout_in_main, currentFragment).commit();
                         Toast.makeText(MainActivity.this, R.string.menu_deleted_note, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.about_in_menu:
@@ -154,16 +161,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case CREATE_NOTE:
-                if (resultCode == CREATE_NOTE_SUCCEED) {
+            case ConstantUtils.CREATE_NOTE:
+                if (resultCode == ConstantUtils.CREATE_NOTE_SUCCEED) {
                     Note note = data.getParcelableExtra("note");
                     dealNotes.addNote(note);
-                    System.out.println(note);
                 } else {
-                    Toast.makeText(this, "没有笔记", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "没有创建笔记", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case MODIFY_NOTE:
+            case ConstantUtils.MODIFY_NOTE:
+                if (resultCode == ConstantUtils.MODIFY_NOTE_SUCCEED) {
+                    Note note = data.getParcelableExtra("note");
+                    dealNotes.modifyNote(note);
+                } else {
+                    Toast.makeText(this, "没有修改笔记", Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
                 break;
@@ -171,7 +183,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initDefaultFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", ConstantUtils.SHOW_NOTES);
         currentFragment = new DisplayNotesFragment();
+        currentFragment.setArguments(bundle);
         fragmentManager.beginTransaction().add(R.id.frame_layout_in_main, currentFragment).commit();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        long interval = System.currentTimeMillis() - lastBackPressedTime;
+        lastBackPressedTime = System.currentTimeMillis();
+        if (interval >= 2000) {
+            Toast.makeText(this, R.string.click_again_to_exit, Toast.LENGTH_SHORT).show();
+            return;
+        }
     }
 }
