@@ -2,6 +2,8 @@ package com.zack.zacknote.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -28,13 +30,30 @@ public class DisplayNotesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private DealNotes dealNotes;
+    private MyRecyclerViewAdapter myRecyclerViewAdapter;
 
     private List<Note> notes;
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case ConstantUtils.ADD_NOTE_SUCCEED:
+                    Note newNote = msg.getData().getParcelable("newNote");
+                    System.out.println(newNote.getTitle());
+                    notes.add(0, newNote);
+                    myRecyclerViewAdapter.notifyDataSetChanged();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    private int whereIsModifying;
+
 
     public DisplayNotesFragment() {
 
     }
-
 
     @Nullable
     @Override
@@ -42,7 +61,7 @@ public class DisplayNotesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_display_notes, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_in_display_fragment);
         notes = getNotes(getArguments().getInt("type"));
-        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(this.getActivity(), notes);
+        myRecyclerViewAdapter = new MyRecyclerViewAdapter(this.getActivity(), notes);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         myRecyclerViewAdapter.OnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -58,6 +77,7 @@ public class DisplayNotesFragment extends Fragment {
                         break;
                     default:
                         if (!isDeleted) {
+                            whereIsModifying = position;
                             Intent intent = new Intent(getActivity(), NoteActivity.class);
                             intent.putExtra("note", notes.get(position));
                             intent.putExtra("type", ConstantUtils.MODIFY_NOTE);
@@ -70,7 +90,6 @@ public class DisplayNotesFragment extends Fragment {
         recyclerView.setAdapter(myRecyclerViewAdapter);
         return view;
     }
-
 
     private List<Note> getNotes(int type) {
         List<Note> mNotes = new ArrayList<>();
@@ -91,20 +110,12 @@ public class DisplayNotesFragment extends Fragment {
             dealNotes = new DealNotes();
         }
         switch (requestCode) {
-            case ConstantUtils.CREATE_NOTE:
-                if (resultCode == ConstantUtils.CREATE_NOTE_SUCCEED) {
-                    Note note = data.getParcelableExtra("note");
-                    dealNotes.addNote(note);
-                } else {
-                    Toast.makeText(getActivity(), "没有创建笔记", Toast.LENGTH_SHORT).show();
-                }
-                break;
             case ConstantUtils.MODIFY_NOTE:
                 if (resultCode == ConstantUtils.MODIFY_NOTE_SUCCEED) {
                     Note note = data.getParcelableExtra("note");
-                    if (note != null)
-                        System.out.println(note.getId());
                     dealNotes.modifyNote(note);
+                    notes.set(whereIsModifying, note);
+                    myRecyclerViewAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getActivity(), "没有修改笔记", Toast.LENGTH_SHORT).show();
                 }
@@ -112,9 +123,5 @@ public class DisplayNotesFragment extends Fragment {
             default:
                 break;
         }
-    }
-
-    public interface OnAddNoteListener {
-        void addNote(Note note);
     }
 }
