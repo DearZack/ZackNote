@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/popup_window_recovery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/normal_white_half_transparent"
+        android:text="恢复" />
+
+    <Button
+        android:id="@+id/popup_window_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/normal_white_half_transparent"
+        android:text="删除" />
+</LinearLayout>

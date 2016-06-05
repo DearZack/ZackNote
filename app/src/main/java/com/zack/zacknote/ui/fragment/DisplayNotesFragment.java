@@ -11,6 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.zack.bean.Note;
@@ -21,6 +22,7 @@ import com.zack.zacknote.adapter.MyRecyclerViewAdapter;
 import com.zack.zacknote.data.DealNotes;
 import com.zack.zacknote.ui.activity.NoteActivity;
 import com.zack.zacknote.utils.ConstantUtils;
+import com.zack.zacknote.utils.PopupWindowUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,9 +41,20 @@ public class DisplayNotesFragment extends Fragment {
             switch (msg.what) {
                 case ConstantUtils.ADD_NOTE_SUCCEED:
                     Note newNote = msg.getData().getParcelable("newNote");
-                    System.out.println(newNote.getTitle());
                     notes.add(0, newNote);
                     myRecyclerViewAdapter.notifyDataSetChanged();
+                    break;
+                case ConstantUtils.SET_NOTE_TO_RECYCLE_BIN:
+                    notes.remove(msg.arg1);
+                    myRecyclerViewAdapter.notifyItemRemoved(msg.arg1);
+                    break;
+                case ConstantUtils.SET_NOTE_TO_NORMAL:
+                    notes.remove(msg.arg1);
+                    myRecyclerViewAdapter.notifyItemRemoved(msg.arg1);
+                    break;
+                case ConstantUtils.DELETE_NOTE_FOREVER:
+                    notes.remove(msg.arg1);
+                    myRecyclerViewAdapter.notifyItemRemoved(msg.arg1);
                     break;
                 default:
                     break;
@@ -67,11 +80,14 @@ public class DisplayNotesFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 boolean isDeleted = notes.get(position).getIsDeleted();
+                PopupWindowUtils popupWindowUtils = new PopupWindowUtils(DisplayNotesFragment.this);
                 switch (view.getId()) {
                     case R.id.note_more:
                         if (isDeleted) {
+                            popupWindowUtils.showPopupWindow(getActivity(), ConstantUtils.SHOW_NOTE_DELETED_PUPOP_WINDOW, view, notes.get(position), position);
                             Toast.makeText(getActivity(), "恢复", Toast.LENGTH_SHORT).show();
                         } else {
+                            popupWindowUtils.showPopupWindow(getActivity(), ConstantUtils.SHOW_NOTE_NORMAL_PUPOP_WINDOW, view, notes.get(position), position);
                             Toast.makeText(getActivity(), "删除", Toast.LENGTH_SHORT).show();
                         }
                         break;

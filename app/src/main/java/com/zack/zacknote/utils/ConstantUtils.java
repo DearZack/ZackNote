@@ -32,4 +32,15 @@ public class ConstantUtils {
      * Handler
      */
     public static final int ADD_NOTE_SUCCEED = 401;
+    public static final int SET_NOTE_TO_RECYCLE_BIN = 402;
+    public static final int SET_NOTE_TO_NORMAL = 403;
+    public static final int DELETE_NOTE_FOREVER = 404;
+
+    /**
+     * 500
+     * PopupWindow type
+     */
+    public static final int SHOW_NOTE_NORMAL_PUPOP_WINDOW = 501;
+    public static final int SHOW_NOTE_DELETED_PUPOP_WINDOW = 502;
+
 }

@@ -16,4 +16,8 @@ public class DealNotes {
     public void modifyNote(Note note) {
         APP.noteDao.update(note);
     }
+
+    public void deleteNote(Note note) {
+        APP.noteDao.delete(note);
+    }
 }

@@ -6,4 +6,9 @@
 
     <color name="note_color">#000000</color>
     <color name="theme">#072237</color>
+
+    <color name="normal_white">#FFFFFF</color>
+    <color name="normal_white_half_transparent">#80EEEEEE</color>
+    <color name="normal_pressed">#CCCCCC</color>
+    <color name="normal_pressed_half_transparent">#80CCCCCC</color>
 </resources>
