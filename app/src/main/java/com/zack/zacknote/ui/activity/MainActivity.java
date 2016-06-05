@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.zack.bean.Note;
 import com.zack.zacknote.R;
 import com.zack.zacknote.data.DealNotes;
+import com.zack.zacknote.ui.fragment.AboutFragment;
 import com.zack.zacknote.ui.fragment.DisplayNotesFragment;
 import com.zack.zacknote.utils.ConstantUtils;
 
@@ -101,7 +102,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.note_fab:
-                Toast.makeText(this, "写笔记", Toast.LENGTH_SHORT).show();
                 intent = new Intent(MainActivity.this, NoteActivity.class);
                 intent.putExtra("type", ConstantUtils.CREATE_NOTE);
                 startActivityForResult(intent, ConstantUtils.CREATE_NOTE);
@@ -126,7 +126,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         currentFragment.setArguments(bundle);
                         fragmentManager.beginTransaction().replace(R.id.frame_layout_in_main, currentFragment).commit();
                         noteFab.setVisibility(View.VISIBLE);
-                        Toast.makeText(MainActivity.this, R.string.menu_note, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.deleted_in_menu:
                         nowTag = getResources().getString(R.string.menu_deleted_note);
@@ -136,12 +135,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         currentFragment.setArguments(bundle);
                         fragmentManager.beginTransaction().replace(R.id.frame_layout_in_main, currentFragment).commit();
                         noteFab.setVisibility(View.GONE);
-                        Toast.makeText(MainActivity.this, R.string.menu_deleted_note, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.about_in_menu:
                         nowTag = getResources().getString(R.string.menu_about);
                         toolbar.setTitle(R.string.menu_about);
-                        Toast.makeText(MainActivity.this, R.string.menu_about, Toast.LENGTH_SHORT).show();
+                        currentFragment = new AboutFragment();
+                        fragmentManager.beginTransaction().replace(R.id.frame_layout_in_main, currentFragment).commit();
+                        noteFab.setVisibility(View.GONE);
                         break;
                     default:
                         break;

@@ -6,8 +6,8 @@
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="@dimen/icon_height_width"
+        android:layout_height="@dimen/icon_height_width"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:src="@mipmap/logo" />
@@ -16,11 +16,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
-        android:textSize="25sp"
-        android:text="ZackNote"
+        android:layout_marginTop="30dp"
+        android:text="@string/app_name"
         android:textColor="#000000"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
 </LinearLayout>

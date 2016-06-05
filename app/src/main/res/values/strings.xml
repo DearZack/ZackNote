@@ -6,4 +6,7 @@
     <string name="menu_deleted_note">回收站</string>
     <string name="menu_about">关于</string>
     <string name="click_again_to_exit">再按一次退出应用</string>
+    <string name="popup_window_recycle_bin">回收站</string>
+    <string name="popup_window_recovery">恢复</string>
+    <string name="popup_window_delete">删除</string>
 </resources>

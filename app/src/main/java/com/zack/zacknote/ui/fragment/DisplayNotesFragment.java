@@ -86,10 +86,8 @@ public class DisplayNotesFragment extends Fragment {
                     case R.id.note_more:
                         if (isDeleted) {
                             popupWindowUtils.showPopupWindow(getActivity(), ConstantUtils.SHOW_NOTE_DELETED_PUPOP_WINDOW, view, notes.get(position), position);
-                            Toast.makeText(getActivity(), "恢复", Toast.LENGTH_SHORT).show();
                         } else {
                             popupWindowUtils.showPopupWindow(getActivity(), ConstantUtils.SHOW_NOTE_NORMAL_PUPOP_WINDOW, view, notes.get(position), position);
-                            Toast.makeText(getActivity(), "删除", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     default:

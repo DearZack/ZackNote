@@ -8,7 +8,7 @@
         android:id="@+id/popup_window_recycle_bin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/normal_white_half_transparent"
-        android:text="回收站" />
+        android:background="@drawable/popup_window_normal_bg"
+        android:text="@string/popup_window_recycle_bin" />
 
 </LinearLayout>

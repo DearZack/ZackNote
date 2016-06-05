@@ -8,13 +8,13 @@
         android:id="@+id/popup_window_recovery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/normal_white_half_transparent"
-        android:text="恢复" />
+        android:background="@drawable/popup_window_normal_bg"
+        android:text="@string/popup_window_recovery" />
 
     <Button
         android:id="@+id/popup_window_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/normal_white_half_transparent"
-        android:text="删除" />
+        android:background="@drawable/popup_window_normal_bg"
+        android:text="@string/popup_window_delete" />
 </LinearLayout>
