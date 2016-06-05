@@ -113,13 +113,17 @@ public class DisplayNotesFragment extends Fragment {
         } else if (type == ConstantUtils.SHOW_DELETED_NOTES) {
             mNotes = APP.noteDao.queryBuilder().where(NoteDao.Properties.IsDeleted.eq(true)).list();
         }
-        Collections.sort(mNotes, new Comparator<Note>() {
+        return sortNotes(mNotes);
+    }
+
+    private List<Note> sortNotes(List<Note> notes) {
+        Collections.sort(notes, new Comparator<Note>() {
             @Override
             public int compare(Note lhs, Note rhs) {
                 return -(lhs.getLastModifyTime().compareTo(rhs.getLastModifyTime()));
             }
         });
-        return mNotes;
+        return notes;
     }
 
     @Override
@@ -134,6 +138,7 @@ public class DisplayNotesFragment extends Fragment {
                     Note note = data.getParcelableExtra("note");
                     dealNotes.modifyNote(note);
                     notes.set(whereIsModifying, note);
+                    sortNotes(notes);
                     myRecyclerViewAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getActivity(), "没有修改笔记", Toast.LENGTH_SHORT).show();
