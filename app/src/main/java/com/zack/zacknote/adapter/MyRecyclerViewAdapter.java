@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.zack.bean.Note;
 import com.zack.zacknote.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,6 +70,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     private String long2String(long time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         long now = System.currentTimeMillis();
         long interval = now - time;
         if (interval < 60 * 1000) {
@@ -77,7 +80,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         } else if (interval < 24 * 60 * 60 * 1000) {
             return interval / 3600000 + "小时之前";
         } else {
-            return interval / 86400000 + "天之前";
+            return sdf.format(new Date(time));
+//            return interval / 86400000 + "天之前";
         }
     }
 

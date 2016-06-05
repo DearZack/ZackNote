@@ -26,6 +26,7 @@ import com.zack.zacknote.utils.PopupWindowUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class DisplayNotesFragment extends Fragment {
@@ -111,11 +112,15 @@ public class DisplayNotesFragment extends Fragment {
         List<Note> mNotes = new ArrayList<>();
         if (type == ConstantUtils.SHOW_NOTES) {
             mNotes = APP.noteDao.queryBuilder().where(NoteDao.Properties.IsDeleted.eq(false)).list();
-            Collections.reverse(mNotes);
         } else if (type == ConstantUtils.SHOW_DELETED_NOTES) {
             mNotes = APP.noteDao.queryBuilder().where(NoteDao.Properties.IsDeleted.eq(true)).list();
-            Collections.reverse(mNotes);
         }
+        Collections.sort(mNotes, new Comparator<Note>() {
+            @Override
+            public int compare(Note lhs, Note rhs) {
+                return -(lhs.getLastModifyTime().compareTo(rhs.getLastModifyTime()));
+            }
+        });
         return mNotes;
     }
 
