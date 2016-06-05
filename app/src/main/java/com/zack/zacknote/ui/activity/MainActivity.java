@@ -1,14 +1,19 @@
 package com.zack.zacknote.ui.activity;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -156,9 +161,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.notes, menu);
+//        getMenuInflater().inflate(R.menu.search_view, menu);
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        MenuItem searchItem = menu.findItem(R.id.search_view);
+//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+//        ComponentName componentName = getComponentName();
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+//        searchView.setQueryHint(getString(R.string.search_note));
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                recyclerAdapter.getFilter().filter(s);
+//                return true;
+//            }
+//        });
+//        MenuItemCompat.setOnActionExpandListener(searchItem, mainPresenter);
 //        return true;
 //    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search_view:
+                System.out.println(123);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
