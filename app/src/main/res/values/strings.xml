@@ -10,4 +10,6 @@
     <string name="popup_window_recovery">恢复</string>
     <string name="popup_window_delete">删除</string>
     <string name="search_note">搜索笔记</string>
+
+    <string name="function_description">ZackNote,自己写的第一款APP，主要用来记录一些琐事，采用了MD的设计风格。</string>
 </resources>
