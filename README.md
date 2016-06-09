@@ -1,5 +1,3 @@
 # ZackNote
 
-new ：
-
-
+new
